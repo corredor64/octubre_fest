@@ -1,0 +1,54 @@
+import Marcas.*
+import Personas.*
+
+describe "Tests Requerimientos Primera Parte" {
+	const corona = new Rubia(contenidoDeLupulo = 5, graduacion = 7, paisFabricacion = "Alemania")
+	const guiness = new Negra(contenidoDeLupulo = 6, paisFabricacion = "Austria")
+	const hofbrau = new Roja(contenidoDeLupulo = 7, paisFabricacion = "Estonia")
+	
+	test "Contenido de alcohol de una jarra de cervza" {
+		const jarra1 = new Jarra(capacidad = 1, marca = corona)
+		
+		assert.equals(jarra1.contenidoDeAlcohol(), 0.07)
+	}
+	
+	test "Total de alcohol ingerido por una persona" {
+		const persona = new Belga(leGustaMusicaTradicional = true, aguante = 6, peso = 90)
+		persona.agregarJarra(new Jarra(capacidad = 1, marca = corona))
+		persona.agregarJarra(new Jarra(capacidad = 2, marca = guiness))
+		
+		assert.equals(persona.alcoholIngerido(), 0.17)
+	}
+	
+	test "La persona esta ebria" {
+		const persona1 = new Aleman(leGustaMusicaTradicional = true, aguante = 10, peso = 80)
+		persona1.agregarJarra(new Jarra(capacidad = 2, marca = corona))
+		persona1.agregarJarra(new Jarra(capacidad = 2, marca = hofbrau))
+		
+		assert.that(persona1.estaEbria())
+		
+		const persona2 = new Checo(leGustaMusicaTradicional = true, aguante = 10, peso = 90)
+		persona2.agregarJarra(new Jarra(capacidad = 1, marca = corona))
+		
+		assert.notThat(persona2.estaEbria())
+	}
+	
+	test "A la persona le gusta la marca" {
+		const persona1 = new Aleman(leGustaMusicaTradicional = true, aguante = 9, peso = 70)
+		const persona2 = new Checo(leGustaMusicaTradicional = true, aguante = 10, peso = 80)
+		const persona3 = new Belga(leGustaMusicaTradicional = true, aguante = 8, peso = 90)
+		
+		assert.that(persona1.leGustaLaMarca(corona))
+		assert.that(persona1.leGustaLaMarca(guiness))
+		assert.that(persona1.leGustaLaMarca(hofbrau))
+		
+		assert.notThat(persona2.leGustaLaMarca(corona))
+		assert.notThat(persona2.leGustaLaMarca(guiness))
+		assert.notThat(persona2.leGustaLaMarca(hofbrau))
+		
+		assert.that(persona3.leGustaLaMarca(corona))
+		assert.that(persona3.leGustaLaMarca(guiness))
+		assert.that(persona3.leGustaLaMarca(hofbrau))
+		
+	}
+}
